@@ -1,7 +1,7 @@
 `default_nettype none
 
 `define GRID_WIDTH 8
-`define GRID_HEIGHT 8
+`define GRID_HEIGHT 32
 
 /* verilator lint_off PINCONNECTEMPTY */
 
@@ -27,11 +27,11 @@ module tt_um_urish_silife (
   wire [`GRID_WIDTH-1:0] grid_s;
   wire [`GRID_HEIGHT-1:0] grid_w;
 
-  grid_8x8 grid(
+  grid_8x32 grid(
     .clk(clk),
     .reset(!rst_n),
     .enable(en),
-    .row_select(ui_in[2:0]),
+    .row_select(ui_in[4:0]),
     .clear_cells(wr_en ? ~uio_in : 8'b0),
     .set_cells(wr_en ? uio_in : 8'b0),
     .cells(uo_out),
@@ -47,14 +47,14 @@ module tt_um_urish_silife (
     .o_e(grid_e),
     .o_s(grid_s),
     .o_w(grid_w),
-    .row_select2(3'b0),
+    .row_select2(5'b0),
     .cells2()
   );
 
   wire _unused_ok = &{
     1'b0,
     ena,
-    ui_in[5:3],
+    ui_in[5],
     1'b0
   };
 
@@ -78,6 +78,30 @@ module tt_um_urish_silife (
   wire [string_bits-1:0] row05 = row_to_string(clk, grid.cell_values['d05*`GRID_WIDTH+:`GRID_WIDTH]);
   wire [string_bits-1:0] row06 = row_to_string(clk, grid.cell_values['d06*`GRID_WIDTH+:`GRID_WIDTH]);
   wire [string_bits-1:0] row07 = row_to_string(clk, grid.cell_values['d07*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row08 = row_to_string(clk, grid.cell_values['d08*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row09 = row_to_string(clk, grid.cell_values['d09*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row10 = row_to_string(clk, grid.cell_values['d10*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row11 = row_to_string(clk, grid.cell_values['d11*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row12 = row_to_string(clk, grid.cell_values['d12*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row13 = row_to_string(clk, grid.cell_values['d13*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row14 = row_to_string(clk, grid.cell_values['d14*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row15 = row_to_string(clk, grid.cell_values['d15*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row16 = row_to_string(clk, grid.cell_values['d16*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row17 = row_to_string(clk, grid.cell_values['d17*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row18 = row_to_string(clk, grid.cell_values['d18*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row19 = row_to_string(clk, grid.cell_values['d19*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row20 = row_to_string(clk, grid.cell_values['d20*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row21 = row_to_string(clk, grid.cell_values['d21*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row22 = row_to_string(clk, grid.cell_values['d22*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row23 = row_to_string(clk, grid.cell_values['d23*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row24 = row_to_string(clk, grid.cell_values['d24*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row25 = row_to_string(clk, grid.cell_values['d25*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row26 = row_to_string(clk, grid.cell_values['d26*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row27 = row_to_string(clk, grid.cell_values['d27*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row28 = row_to_string(clk, grid.cell_values['d28*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row29 = row_to_string(clk, grid.cell_values['d29*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row30 = row_to_string(clk, grid.cell_values['d30*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row31 = row_to_string(clk, grid.cell_values['d31*`GRID_WIDTH+:`GRID_WIDTH]);
 
 `endif
 

@@ -4,7 +4,7 @@
 from math import log2, ceil
 
 width = 8
-height = 8
+height = 32
 
 template = """
 // SPDX-FileCopyrightText: © 2021 Uri Shaked <uri@wokwi.com>

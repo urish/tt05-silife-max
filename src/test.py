@@ -7,7 +7,7 @@ from cocotb.triggers import ClockCycles, RisingEdge
 from game_of_life import GameOfLife
 
 
-GRID_HEIGHT = 8
+GRID_HEIGHT = 32
 GRID_WIDTH = 8
 
 TEST_GENERATIONS = 16
@@ -70,14 +70,38 @@ async def test_silife(dut):
 
     game.load(
         [
-            "  **** *",
-            " *      ",
-            "  ***  *",
-            "     * *",
-            "     * *",
-            " ****  *",
             "        ",
-            "********",
+            " ***    ",
+            "        ",
+            "     *  ",
+            "     *  ",
+            "     *  ",
+            "**      ",
+            "**      ",
+            "        ",
+            "        ",
+            " *******",
+            "    *   ",
+            "    *   ",
+            "    *   ",
+            "    *   ",
+            "    *   ",
+            "        ",
+            " *******",
+            "    *   ",
+            "    *   ",
+            "    *   ",
+            "    *   ",
+            "    *   ",
+            "        ",
+            " ****** ",
+            " *      ",
+            " *      ",
+            " ****** ",
+            "      * ",
+            "      * ",
+            " ****** ",
+            "        ",
         ],
     )
 

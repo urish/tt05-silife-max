@@ -7,12 +7,12 @@ project:
 # Source files must be in ./src and you must list each source file separately
   source_files:        
     - cell.v
-    - grid_8x8.v
+    - grid_8x32.v
     - silife.v
   top_module:  "tt_um_urish_silife"      # Put the name of your top module here, must start with "tt_um_". Make it unique by including your github username
 
 # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x2"    # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2 or 8x2
+  tiles: "3x2"    # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2 or 8x2
 
 # Keep a track of the submission yaml
 yaml_version: 4
@@ -23,13 +23,13 @@ yaml_version: 4
 # Here is a great example: https://github.com/davidsiaw/tt02-davidsiaw-stackcalc/blob/38c5647f83aad2aec675d566aa3d67b98f0aac81/info.yaml
 documentation: 
   author:       "Uri Shaked"      # Your name
-  title:        "Game of Life 8x8 (siLife)"      # Project title
+  title:        "Game of Life 8x32 (siLife)"      # Project title
   language:     "Verilog" # other examples include Verilog, Amaranth, VHDL, etc
   description:  "Silicon implementation of Conway's Game of Life"      # Short description of what your project does
 
 # Longer description of how the project works. You can use standard markdown format.
   how_it_works: |
-      It is a silicon implementation of Conway's Game of Life. The game is played on a 8x8 grid, and the rules are as follows:
+      It is a silicon implementation of Conway's Game of Life. The game is played on a 8x32 grid, and the rules are as follows:
       - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
       - Any live cell with two or three live neighbours lives on to the next generation.
       - Any live cell with more than three live neighbours dies, as if by overpopulation.
@@ -38,21 +38,21 @@ documentation:
 # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
   how_to_test:  |
       Load initial grid row by row. 
-      Each row is loaded by selecting the row number (using the row_sel[0:2] inputs), 
-      setting the cell_in[0:7] inputs to the desired state, and pulsing the wr_en input.
+      Each row is loaded by selecting the row number (using the row_sel[4:0] inputs),
+      setting the cell_in[7:0] inputs to the desired state, and pulsing the wr_en input.
 
-      Once the grid is loaded, set the en input to 1 to start the game. The game will one step each clock cycle.
+      Once the grid is loaded, set the en input to 1 to start the game. The game will advance one step in each clock cycle.
       To pause the game, set the en input to 0.
 
-      To view the current state of the grid, set the row_sel[0:2] inputs to the desired row number, and read the cell_out[0:7] outputs.
+      To view the current state of the grid, set the row_sel[4:0] inputs to the desired row number, and read the cell_out[7:0] outputs.
 
 # A description of what the inputs do (e.g. red button, SPI CLK, SPI MOSI, etc).
   inputs:               
     - row_sel[0]
     - row_sel[1]
     - rol_sel[2]
-    - none
-    - none
+    - rol_sel[3]
+    - rol_sel[4]
     - none
     - en
     - wr_en

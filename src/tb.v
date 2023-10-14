@@ -29,11 +29,11 @@ module tb ();
     // Silife signals
     reg en;
     reg wr_en;
-    reg [2:0] row_select;
+    reg [4:0] row_select;
     reg [7:0] grid_in;
     wire [7:0] grid_out = uo_out;
 
-    assign ui_in = {wr_en, en, 3'b0, row_select};
+    assign ui_in = {wr_en, en, 1'b0, row_select};
     assign uio_in = grid_in;
 
     tt_um_urish_silife silife (
