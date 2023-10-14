@@ -57,4 +57,27 @@ module tt_um_urish_silife (
     1'b0
   };
 
+`ifdef SILIFE_TEST
+  /* Pretty output for the test bench */
+  localparam string_bits = `GRID_WIDTH * 8;
+  integer i;
+  function [string_bits-1:0] row_to_string(input clk, input [`GRID_WIDTH-1:0] row);
+    begin
+      for (i = 0; i < `GRID_WIDTH; i = i + 1) begin
+        row_to_string[i*8+:8] = clk ? (row[`GRID_WIDTH-1-i] ? "*" : " ") : 8'bz;
+      end
+    end
+  endfunction
+
+  wire [string_bits-1:0] row00 = row_to_string(clk, grid.cell_values['d00*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row01 = row_to_string(clk, grid.cell_values['d01*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row02 = row_to_string(clk, grid.cell_values['d02*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row03 = row_to_string(clk, grid.cell_values['d03*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row04 = row_to_string(clk, grid.cell_values['d04*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row05 = row_to_string(clk, grid.cell_values['d05*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row06 = row_to_string(clk, grid.cell_values['d06*`GRID_WIDTH+:`GRID_WIDTH]);
+  wire [string_bits-1:0] row07 = row_to_string(clk, grid.cell_values['d07*`GRID_WIDTH+:`GRID_WIDTH]);
+
+`endif
+
 endmodule
