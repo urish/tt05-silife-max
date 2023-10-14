@@ -23,7 +23,7 @@ yaml_version: 4
 # Here is a great example: https://github.com/davidsiaw/tt02-davidsiaw-stackcalc/blob/38c5647f83aad2aec675d566aa3d67b98f0aac81/info.yaml
 documentation: 
   author:       "Uri Shaked"      # Your name
-  title:        "Game of Life (siLife)"      # Project title
+  title:        "Game of Life 8x8 (siLife)"      # Project title
   language:     "Verilog" # other examples include Verilog, Amaranth, VHDL, etc
   description:  "Silicon implementation of Conway's Game of Life"      # Short description of what your project does
 
