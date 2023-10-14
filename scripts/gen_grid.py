@@ -98,8 +98,8 @@ def cell(y, x):
 
 
 cells = ""
-for y in range(width):
-    for x in range(height):
+for y in range(height):
+    for x in range(width):
         index = y * width + x
         params = {
             "x": x,
