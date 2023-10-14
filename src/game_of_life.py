@@ -11,8 +11,8 @@ class GameOfLife:
 
     def read_cell(self, y, x):
         if self.wrap:
-            x = (x + self.grid.shape[0]) % self.grid.shape[0]
-            y = (y + self.grid.shape[1]) % self.grid.shape[1]
+            x = (x + self.grid.shape[1]) % self.grid.shape[1]
+            y = (y + self.grid.shape[0]) % self.grid.shape[0]
         if (
             (y < 0)
             or (x < 0)
