@@ -1,6 +1,7 @@
 `default_nettype none
 
 `define GRID_WIDTH 8
+`define GRID_HEIGHT 8
 
 /* verilator lint_off PINCONNECTEMPTY */
 
@@ -22,9 +23,9 @@ module tt_um_urish_silife (
   wire wr_en = ui_in[7];
 
   wire [`GRID_WIDTH-1:0] grid_n;
-  wire [`GRID_WIDTH-1:0] grid_e;
+  wire [`GRID_HEIGHT-1:0] grid_e;
   wire [`GRID_WIDTH-1:0] grid_s;
-  wire [`GRID_WIDTH-1:0] grid_w;
+  wire [`GRID_HEIGHT-1:0] grid_w;
 
   grid_8x8 grid(
     .clk(clk),
@@ -41,7 +42,7 @@ module tt_um_urish_silife (
     .i_ne(grid_s[0]),
     .i_se(grid_w[0]),
     .i_sw(grid_n[`GRID_WIDTH-1]),
-    .i_nw(grid_e[`GRID_WIDTH-1]),
+    .i_nw(grid_e[`GRID_HEIGHT-1]),
     .o_n(grid_n),
     .o_e(grid_e),
     .o_s(grid_s),
