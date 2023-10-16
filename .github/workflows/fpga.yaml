@@ -1,0 +1,38 @@
+name: Build FPGA bitstream
+# either manually started, or on a schedule
+on: [push, workflow_dispatch]
+jobs:
+  fpga_bitstream:
+    # ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      # need the repo checked out
+      - name: checkout repo
+        uses: actions/checkout@v3
+
+      # install gowin tools
+      - name: install gowin tools
+        run: |
+          mkdir ~/gowin
+          cd ~/gowin
+          wget http://cdn.gowinsemi.com.cn/Gowin_V1.9.8.11_Education_linux.tar.gz
+          tar zxvf Gowin_V1.9.8.11_Education_linux.tar.gz
+
+      - name: build firmware
+        working-directory: fpga
+        run: make
+        env:
+          GOWIN_HOME: ~/gowin
+
+      - name: upload bitsream
+        uses: actions/upload-artifact@v3
+        with:
+          name: bitstream
+          path: fpga/impl/pnr/project.fs
+
+      - name: upload logs
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs
+          path: fpga/impl
