@@ -1,4 +1,4 @@
-name: Build FPGA bitstream
+name: FPGA
 # either manually started, or on a schedule
 on: [push, workflow_dispatch]
 jobs:
