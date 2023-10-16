@@ -19,6 +19,7 @@ module tt_um_urish_silife (
   assign uio_oe = 8'b00000000; 
   assign uio_out = 8'b00000000;
 
+  wire max7219_enable = ui_in[5];
   wire en = ui_in[6];
   wire wr_en = ui_in[7];
 
@@ -27,6 +28,30 @@ module tt_um_urish_silife (
   wire [`GRID_WIDTH-1:0] grid_s;
   wire [`GRID_HEIGHT-1:0] grid_w;
 
+  wire [`GRID_WIDTH-1:0] max7219_cells;
+  wire [4:0] max7219_row_select;
+  wire max7219_cs;
+  wire max7219_sck;
+  wire max7219_mosi;
+
+  silife_max7219 max7219 (
+      .reset(!rst_n),
+      .clk(clk),
+      .i_frame(1'b1),
+      .i_enable(max7219_enable),
+      .i_brightness(4'hf),
+      .i_cells(max7219_cells),
+      .o_cs(max7219_cs),
+      .o_sck(max7219_sck),
+      .o_mosi(max7219_mosi),
+      .o_busy(),
+      .o_row_select(max7219_row_select)
+  );
+
+  wire [7:0] cells_out;
+
+  assign uo_out = max7219_enable ? { 5'b0, max7219_mosi, max7219_sck, max7219_cs } : cells_out;
+
   grid_8x32 grid(
     .clk(clk),
     .reset(!rst_n),
@@ -34,7 +59,7 @@ module tt_um_urish_silife (
     .row_select(ui_in[4:0]),
     .clear_cells(wr_en ? ~uio_in : 8'b0),
     .set_cells(wr_en ? uio_in : 8'b0),
-    .cells(uo_out),
+    .cells(cells_out),
     .i_n(grid_s),
     .i_e(grid_w),
     .i_s(grid_n),
@@ -47,8 +72,8 @@ module tt_um_urish_silife (
     .o_e(grid_e),
     .o_s(grid_s),
     .o_w(grid_w),
-    .row_select2(5'b0),
-    .cells2()
+    .row_select2(max7219_row_select),
+    .cells2(max7219_cells)
   );
 
   wire _unused_ok = &{

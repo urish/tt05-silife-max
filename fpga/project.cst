@@ -16,3 +16,10 @@ IO_LOC "uart_tx" 69;
 IO_PORT "uart_tx" IO_TYPE=LVCMOS33;
 IO_LOC "uart_tx_2" 73;
 IO_PORT "uart_tx_2" IO_TYPE=LVCMOS33;
+
+IO_LOC "max7129_cs" 74;
+IO_PORT "max7129_cs" IO_TYPE=LVCMOS33;
+IO_LOC "max7129_clk" 77;
+IO_PORT "max7129_clk" IO_TYPE=LVCMOS33;
+IO_LOC "max7129_data" 85;
+IO_PORT "max7129_data" IO_TYPE=LVCMOS33;

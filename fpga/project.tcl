@@ -1,5 +1,7 @@
 add_file -type verilog ../src/grid_8x32.v
 add_file -type verilog ../src/cell.v
+add_file -type verilog ../src/spi_master.v
+add_file -type verilog ../src/max7219.v
 add_file -type verilog ../src/silife.v
 add_file -type verilog uart_rx.v
 add_file -type verilog uart_tx.v
