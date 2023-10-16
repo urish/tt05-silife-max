@@ -35,7 +35,9 @@ jobs:
         run: pip install numpy==1.24.3
 
       - name: GL test
-        uses: TinyTapeout/tt-gds-action/gl_test@gl_custom_test_dir
+        uses: TinyTapeout/tt-gds-action/gl_test@tt05
+        with:
+          test-dir: test
 
   viewer:
     needs: gds

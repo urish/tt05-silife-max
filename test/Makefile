@@ -4,12 +4,13 @@
 # defaults
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
+PROJ = $(PWD)/../src
 
 # normal simulation
 ifneq ($(GATES),yes)
 
 # this is the only part you should need to modify:
-VERILOG_SOURCES += $(PWD)/tb.v $(PWD)/cell.v $(PWD)/grid_8x32.v $(PWD)/silife.v
+VERILOG_SOURCES += $(PWD)/tb.v $(PROJ)/cell.v $(PROJ)/grid_8x32.v $(PROJ)/silife.v
 COMPILE_ARGS 		+= -DSILIFE_TEST
 
 else

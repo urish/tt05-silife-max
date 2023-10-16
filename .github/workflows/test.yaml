@@ -24,7 +24,7 @@ jobs:
 
       - name: test
         run: |
-          cd src
+          cd test
           make clean
           make
           # make will return success even if the test fails, so check for failure in the results.xml
