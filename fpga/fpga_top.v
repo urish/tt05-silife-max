@@ -98,7 +98,7 @@ always @(posedge clk) begin
 
         if (silife_wr_en) begin
             // Advance to next row after writing 8 columns
-            silife_row_select <= silife_row_select + 1;
+            silife_row_select <= silife_row_select + 5'd1;
         end
 
         if (!tx_ready) begin
@@ -119,12 +119,12 @@ always @(posedge clk) begin
                     if (silife_row_select == 31) begin
                         dump_grid <= 'b0;
                     end else begin
-                        silife_row_select <= silife_row_select + 1;
+                        silife_row_select <= silife_row_select + 5'd1;
                     end
                 end else begin
                     tx_byte <= silife_data_out[dump_grid_col[2:0]] ? "#" : ".";
                     tx_valid <= 'b1;
-                    dump_grid_col <= dump_grid_col + 1;
+                    dump_grid_col <= dump_grid_col + 4'd1;
                 end
             end
         end
@@ -162,7 +162,7 @@ always @(posedge clk) begin
                     tx_byte <= rx_byte;
                     tx_valid <= 'b1;
                     silife_data_in[write_grid_col[2:0]] <= rx_byte == "#";
-                    write_grid_col <= write_grid_col + 1;
+                    write_grid_col <= write_grid_col + 4'd1;
                     if (write_grid_col == 7) begin
                         write_grid_col <= 'd0;
                         silife_wr_en <= 'b1;
