@@ -6,6 +6,12 @@ from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles, RisingEdge
 from game_of_life import GameOfLife
 
+with open("../src/demo_pattern.lif", "r") as f:
+    DEMO_PATTERN = [
+        line.strip().replace(".", " ")
+        for line in f.readlines()
+        if not line.startswith("#")
+    ]
 
 GRID_HEIGHT = 32
 GRID_WIDTH = 8
@@ -113,6 +119,7 @@ async def test_silife(dut):
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 2)
     dut.rst_n.value = 1
+    await ClockCycles(dut.clk, 1)
 
     dut._log.info("Test initial state (write & read)")
     await silife.write_grid(game.dump())
@@ -123,3 +130,26 @@ async def test_silife(dut):
         await silife.step()
         game.step()
         assert await silife.read_grid() == game.dump()
+
+
+@cocotb.test()
+async def test_demo_mode(dut):
+    dut._log.info("start")
+    clock = Clock(dut.clk, 10, units="us")
+    cocotb.start_soon(clock.start())
+
+    silife = SiLifeDriver(dut, dut.clk)
+
+    # Reset
+    dut._log.info("Enable & reset into demo mode")
+    dut.ena.value = 1
+    dut.ui_in.value = 0
+    dut.uio_in.value = 0
+    dut.rst_n.value = 0
+    await ClockCycles(dut.clk, 2)
+    dut.wr_en.value = 1
+    dut.rst_n.value = 1
+    await ClockCycles(dut.clk, 100)  # wait for demo mode to load initial grid
+    
+    dut._log.info("Verify demo mode initial state")
+    assert await silife.read_grid() == DEMO_PATTERN

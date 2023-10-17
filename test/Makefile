@@ -10,8 +10,8 @@ PROJ = $(PWD)/../src
 ifneq ($(GATES),yes)
 
 # this is the only part you should need to modify:
-VERILOG_SOURCES += $(PWD)/tb.v $(PROJ)/cell.v $(PROJ)/grid_8x32.v $(PROJ)/max7219.v $(PROJ)/spi_master.v $(PROJ)/silife.v
-COMPILE_ARGS 		+= -DSILIFE_TEST
+VERILOG_SOURCES += $(PWD)/tb.v $(PROJ)/cell.v $(PROJ)/grid_8x32.v $(PROJ)/max7219.v $(PROJ)/spi_master.v $(PROJ)/demo.v $(PROJ)/silife.v
+COMPILE_ARGS 		+= -DSILIFE_TEST -I$(PROJ)
 
 else
 

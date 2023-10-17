@@ -33,6 +33,21 @@ module tt_um_urish_silife_max (
   wire max7219_cs;
   wire max7219_sck;
   wire max7219_mosi;
+  
+  reg prev_rst_n;
+  reg demo_mode;
+  wire [4:0] demo_row_select;
+  wire [7:0] demo_cells;
+  wire demo_wr_en;
+
+  silife_demo silife_demo_inst(
+    .clk(clk),
+    .rst_n(rst_n),
+    .en(demo_mode),
+    .row_select(demo_row_select),
+    .cells(demo_cells),
+    .wr_en(demo_wr_en)
+  );
 
   silife_max7219 max7219 (
       .reset(!rst_n),
@@ -51,14 +66,17 @@ module tt_um_urish_silife_max (
   wire [7:0] cells_out;
 
   assign uo_out = max7219_enable ? { 5'b0, max7219_mosi, max7219_sck, max7219_cs } : cells_out;
+  reg wr_available;
+  wire grid_wr_en = (wr_available && wr_en) | demo_wr_en;
+  wire [7:0] grid_wr_cells = demo_wr_en ? demo_cells : uio_in;
 
   grid_8x32 grid(
     .clk(clk),
     .reset(!rst_n),
     .enable(en),
-    .row_select(ui_in[4:0]),
-    .clear_cells(wr_en ? ~uio_in : 8'b0),
-    .set_cells(wr_en ? uio_in : 8'b0),
+    .row_select(demo_wr_en ? demo_row_select : ui_in[4:0]),
+    .clear_cells(grid_wr_en ? ~grid_wr_cells : 8'b0),
+    .set_cells(grid_wr_en ? grid_wr_cells : 8'b0),
     .cells(cells_out),
     .i_n(grid_s),
     .i_e(grid_w),
@@ -75,6 +93,22 @@ module tt_um_urish_silife_max (
     .row_select2(max7219_row_select),
     .cells2(max7219_cells)
   );
+
+  always @(posedge clk) begin
+    if (!rst_n) begin
+      demo_mode <= 0;
+      prev_rst_n <= 0;
+      wr_available <= 0;
+    end else begin
+      prev_rst_n <= 1;
+      if (!prev_rst_n && wr_en) begin
+        demo_mode <= 1;
+      end
+      if (!wr_en) begin
+        wr_available <= 1;
+      end
+    end
+  end
 
   wire _unused_ok = &{
     1'b0,

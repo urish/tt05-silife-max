@@ -10,6 +10,7 @@ project:
     - grid_8x32.v
     - max7219.v
     - spi_master.v
+    - demo.v
     - silife.v
   top_module:  "tt_um_urish_silife_max"      # Put the name of your top module here, must start with "tt_um_". Make it unique by including your github username
 
@@ -39,6 +40,10 @@ documentation:
 
 # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
   how_to_test:  |
+      Demo mode: Hold `wr_en` high while reseting the design (`rst_n` low). This will automatically load
+      a demo game into the grid.
+
+      Manual mode: 
       Load initial grid row by row. 
       Each row is loaded by selecting the row number (using the `row_sel[4:0]` inputs),
       setting the `cell_in[7:0]` inputs to the desired state, and pulsing the `wr_en` input.
@@ -87,5 +92,5 @@ documentation:
   external_hw:  "MAX7219 LED Matrix (FC-16 module)"      # Describe any external hardware needed
   discord:      "urish"      # Your discord handle, used for communication and automatically assigning tapeout role after a submission
   doc_link:     ""      # URL to longer form documentation, eg the README.md in your repository
-  clock_hz:     0       # Clock frequency in Hz (if required)
+  clock_hz:     10000000       # Clock frequency in Hz (if required)
   picture:      ""      # relative path to a picture in your repository (must be 512kb or less)

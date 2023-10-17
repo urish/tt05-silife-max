@@ -108,9 +108,10 @@ always @(posedge clk) begin
 
         if (!silife_rst_n) begin
             silife_rst_n <= 'b1;
+            silife_wr_en <= silife_wr_en;
         end
 
-        if (silife_wr_en) begin
+        if (silife_wr_en && silife_rst_n) begin
             // Advance to next row after writing 8 columns
             silife_row_select <= silife_row_select + 5'd1;
         end
@@ -181,6 +182,15 @@ always @(posedge clk) begin
                         write_grid_col <= 'd0;
                         silife_wr_en <= 'b1;
                     end
+                end
+
+
+                "d",
+                "D": begin // reset in demo mode
+                    silife_rst_n <= 'b0;
+                    silife_wr_en <= 'b1;
+                    tx_byte <= "D";
+                    tx_valid <= 'b1;
                 end
 
                 "z",
