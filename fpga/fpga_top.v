@@ -32,6 +32,7 @@ end
 reg step;
 
 reg [4:0] silife_row_select;
+reg silife_rst_n = 'b0;
 reg silife_en;
 reg silife_wr_en;
 
@@ -51,7 +52,7 @@ tt_um_urish_silife_max silife(
     .uio_oe(),
     .ena(1'b1),
     .clk(clk),
-    .rst_n(rst_n)
+    .rst_n(silife_rst_n)
 );
 
 wire [7:0] rx_byte;
@@ -99,10 +100,15 @@ always @(posedge clk) begin
         silife_en <= 'b0;
         silife_wr_en <= 'b0;
         tx_valid <= 'b0;
-        dump_grid = 'b0;
+        dump_grid <= 'b0;
+        silife_rst_n <= 'b0;
     end else begin
         silife_en <= 'b0;
         silife_wr_en <= 'b0;
+
+        if (!silife_rst_n) begin
+            silife_rst_n <= 'b1;
+        end
 
         if (silife_wr_en) begin
             // Advance to next row after writing 8 columns
@@ -175,6 +181,13 @@ always @(posedge clk) begin
                         write_grid_col <= 'd0;
                         silife_wr_en <= 'b1;
                     end
+                end
+
+                "z",
+                "Z": begin // reset the module
+                    silife_rst_n <= 'b0;
+                    tx_byte <= "Z";
+                    tx_valid <= 'b1;
                 end
                 
                 default: begin
