@@ -11,7 +11,7 @@ project:
     - max7219.v
     - spi_master.v
     - silife.v
-  top_module:  "tt_um_urish_silife"      # Put the name of your top module here, must start with "tt_um_". Make it unique by including your github username
+  top_module:  "tt_um_urish_silife_max"      # Put the name of your top module here, must start with "tt_um_". Make it unique by including your github username
 
 # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "3x2"    # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2 or 8x2

@@ -43,7 +43,7 @@ assign max7129_cs = silife_data_out[0];
 assign max7129_clk = silife_data_out[1];
 assign max7129_data = silife_data_out[2];
 
-tt_um_urish_silife silife(
+tt_um_urish_silife_max silife(
     .ui_in({silife_wr_en, silife_en, max7219_en, silife_row_select}),
     .uo_out(silife_data_out),
     .uio_in(silife_data_in),

@@ -36,7 +36,7 @@ module tb ();
     assign ui_in = {wr_en, en, 1'b0, row_select};
     assign uio_in = grid_in;
 
-    tt_um_urish_silife silife (
+    tt_um_urish_silife_max silife (
     // include power ports for the Gate Level test
     `ifdef GL_TEST
         .VPWR( 1'b1),
