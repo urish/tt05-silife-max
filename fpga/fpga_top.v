@@ -1,7 +1,7 @@
 `default_nettype none
 
 module fpga_top(
-    input  wire  clk,
+    input  wire  clk27,
     input  wire  rst,
     input  wire  sw_demo,
     input  wire  uart_rx,
@@ -14,11 +14,18 @@ module fpga_top(
     output wire  max7129_data
 );
 
-parameter                        CLK_FREQ  = 27;     //Mhz
+parameter                        CLK_FREQ  = 10.125;     //Mhz
 parameter                        UART_BAUD = 115200; //Khz
 
 localparam CHAR_CR = 8'h0d;
 localparam CHAR_NEWLINE = 8'h0a;
+
+wire clk;
+
+Gowin_rPLL rpll_inst(
+    .clkin(clk27), 
+    .clkout(clk)
+);
 
 wire rst_n = ~rst;
 

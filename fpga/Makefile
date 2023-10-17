@@ -1,4 +1,4 @@
-SOURCE_FILES = fpga_top.v uart_rx.v uart_tx.v $(wildcard ../src/*.v)
+SOURCE_FILES = fpga_top.v uart_rx.v uart_tx.v rpll.v $(wildcard ../src/*.v)
 TARGET = impl/pnr/project.fs
 GW_SH = $(GOWIN_HOME)/IDE/bin/gw_sh
 

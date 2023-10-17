@@ -6,6 +6,7 @@ add_file -type verilog ../src/demo.v
 add_file -type verilog ../src/silife.v
 add_file -type verilog uart_rx.v
 add_file -type verilog uart_tx.v
+add_file -type verilog rpll.v
 add_file -type verilog fpga_top.v
 add_file -type cst project.cst
 add_file -type sdc project.sdc
