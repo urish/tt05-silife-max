@@ -145,7 +145,7 @@ always @(posedge clk) begin
                         silife_row_select <= silife_row_select + 5'd1;
                     end
                 end else begin
-                    tx_byte <= silife_data_out[dump_grid_col[2:0]] ? "#" : ".";
+                    tx_byte <= silife_data_out[3'd7 - dump_grid_col[2:0]] ? "#" : ".";
                     tx_valid <= 'b1;
                     dump_grid_col <= dump_grid_col + 4'd1;
                 end
@@ -184,7 +184,7 @@ always @(posedge clk) begin
                 "#": begin // writes a single grid cell
                     tx_byte <= rx_byte;
                     tx_valid <= 'b1;
-                    silife_data_in[write_grid_col[2:0]] <= rx_byte == "#";
+                    silife_data_in[3'd7 - write_grid_col[2:0]] <= rx_byte == "#";
                     write_grid_col <= write_grid_col + 4'd1;
                     if (write_grid_col == 7) begin
                         write_grid_col <= 'd0;
