@@ -4,7 +4,8 @@ module silife_demo(
   input wire en,
   output reg [4:0] row_select,
   output wire [7:0] cells,
-  output reg wr_en
+  output reg wr_en,
+  output reg step
 );
 
 `include "demo_pattern.v"
@@ -19,6 +20,7 @@ endfunction
 assign cells = reverse8(DEMO_PATTERN[{5'd31-row_select, 3'b000}+:8]);
 
 reg init_done;
+reg [31:0] counter;
 
 always @(posedge clk) begin
     if (!rst_n) begin
@@ -37,6 +39,13 @@ always @(posedge clk) begin
             init_done <= 1'b1;
             wr_en <= 1'b0;
           end
+        end
+        if (counter == 'd9_999_999) begin
+          step <= 1'b1;
+          counter <= 'd0;
+        end else begin
+          counter <= counter + 1;
+          step <= 1'b0;
         end
     end else begin
       wr_en <= 1'b0;

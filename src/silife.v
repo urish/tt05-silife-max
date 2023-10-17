@@ -39,6 +39,7 @@ module tt_um_urish_silife_max (
   wire [4:0] demo_row_select;
   wire [7:0] demo_cells;
   wire demo_wr_en;
+  wire demo_step;
 
   silife_demo silife_demo_inst(
     .clk(clk),
@@ -46,7 +47,8 @@ module tt_um_urish_silife_max (
     .en(demo_mode),
     .row_select(demo_row_select),
     .cells(demo_cells),
-    .wr_en(demo_wr_en)
+    .wr_en(demo_wr_en),
+    .step(demo_step)
   );
 
   silife_max7219 max7219 (
@@ -73,7 +75,7 @@ module tt_um_urish_silife_max (
   grid_8x32 grid(
     .clk(clk),
     .reset(!rst_n),
-    .enable(en),
+    .enable(en & (~demo_mode | demo_step)),
     .row_select(demo_wr_en ? demo_row_select : ui_in[4:0]),
     .clear_cells(grid_wr_en ? ~grid_wr_cells : 8'b0),
     .set_cells(grid_wr_en ? grid_wr_cells : 8'b0),

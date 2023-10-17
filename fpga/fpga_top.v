@@ -29,12 +29,12 @@ always @(posedge clk) begin
     counter <= counter + 24'd1;
 end
 
-reg step;
-
 reg [4:0] silife_row_select;
 reg silife_rst_n = 'b0;
-reg silife_en;
 reg silife_wr_en;
+reg step;
+reg demo_en;
+wire silife_en = step | demo_en;
 
 reg [7:0] silife_data_in;
 wire [7:0] silife_data_out;
@@ -95,15 +95,15 @@ uart_tx #(
 always @(posedge clk) begin
     if (rst) begin
         tx_byte <= "X";
-        step <= 'b0;
         silife_row_select <= 'b0;
-        silife_en <= 'b0;
+        step <= 'b0;
         silife_wr_en <= 'b0;
         tx_valid <= 'b0;
         dump_grid <= 'b0;
         silife_rst_n <= 'b0;
+        demo_en <= 'b0;
     end else begin
-        silife_en <= 'b0;
+        step <= 'b0;
         silife_wr_en <= 'b0;
 
         if (!silife_rst_n) begin
@@ -150,7 +150,7 @@ always @(posedge clk) begin
                 "s",
                 "S": begin // steps the simulation
                     tx_byte <= "S";
-                    silife_en <= 'b1;
+                    step <= 'b1;
                     tx_valid <= 'b1;
                 end
 
@@ -161,7 +161,7 @@ always @(posedge clk) begin
                     dump_grid <= 'b1;
                     dump_grid_col <= 'd0;
                     silife_row_select <= 'd0;
-                    silife_en <= rx_byte == "R"; // "R" also steps the simulation
+                    step <= rx_byte == "R"; // "R" also steps the simulation
                 end
 
                 "w",
@@ -191,6 +191,14 @@ always @(posedge clk) begin
                     silife_wr_en <= 'b1;
                     tx_byte <= "D";
                     tx_valid <= 'b1;
+                    demo_en <= 'b1;
+                end
+
+                "p",
+                "P": begin // pause/resume demo mode
+                    tx_byte <= "P";
+                    tx_valid <= 'b1;
+                    demo_en <= ~demo_en;
                 end
 
                 "z",
@@ -198,6 +206,7 @@ always @(posedge clk) begin
                     silife_rst_n <= 'b0;
                     tx_byte <= "Z";
                     tx_valid <= 'b1;
+                    demo_en <= 'b0;
                 end
                 
                 default: begin
