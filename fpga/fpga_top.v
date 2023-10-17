@@ -3,6 +3,7 @@
 module fpga_top(
     input  wire  clk,
     input  wire  rst,
+    input  wire  sw_demo,
     input  wire  uart_rx,
     output wire  uart_tx,
     output wire  uart_tx_2,
@@ -34,7 +35,7 @@ reg silife_rst_n = 'b0;
 reg silife_wr_en;
 reg step;
 reg demo_en;
-wire silife_en = step | demo_en;
+wire silife_en = step | demo_en; 
 
 reg [7:0] silife_data_in;
 wire [7:0] silife_data_out;
@@ -97,11 +98,11 @@ always @(posedge clk) begin
         tx_byte <= "X";
         silife_row_select <= 'b0;
         step <= 'b0;
-        silife_wr_en <= 'b0;
+        silife_wr_en <= sw_demo;
         tx_valid <= 'b0;
         dump_grid <= 'b0;
         silife_rst_n <= 'b0;
-        demo_en <= 'b0;
+        demo_en <= sw_demo;
     end else begin
         step <= 'b0;
         silife_wr_en <= 'b0;

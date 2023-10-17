@@ -30,7 +30,7 @@ always @(posedge clk) begin
     end else if (en) begin
         if (!init_done) begin
           if (wr_en) begin
-            row_select <= row_select + 1;
+            row_select <= row_select + 5'd1;
           end else 
           begin
             wr_en <= 1'b1;
