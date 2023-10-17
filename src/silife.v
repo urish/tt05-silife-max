@@ -79,7 +79,6 @@ module tt_um_urish_silife_max (
   wire _unused_ok = &{
     1'b0,
     ena,
-    ui_in[5],
     1'b0
   };
 
