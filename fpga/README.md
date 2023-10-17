@@ -19,7 +19,8 @@ Upload the bitstream to the FPGA board. Then hold S2 and press S1 to start the p
 If you press S1 without holding S2, the project enters manual mode, where you can use UART (115200 baud,
 connected through the BL616) to send commands to the FPGA board. The commands are:
 
-- `D` to reset the board in demo mode
+- `d` to reset the board in demo mode (pattern 1)
+- `D` to reset the board in demo mode (pattern 2)
 - `Z` to reset the board in manual mode
 - `r` to dump the current state of the grid
 - `R` to dump the current state of the grid and calculate the next generation

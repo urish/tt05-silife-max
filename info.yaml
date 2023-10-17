@@ -43,6 +43,7 @@ documentation:
       Demo mode: 
       The demo mode loads a pre-defined game into the grid and advances it automatically.
       To enter the demo mode, `wr_en` high while reseting the design (`rst_n` low).
+      Use the `pattern_sel` inputs to select the desired demo pattern.
       Set `en` to 1 to automatically advance one generation every 0.4 seconds (assuming a 10MHz clock).
       To pause the game, set `en` to 0.
 
@@ -62,7 +63,7 @@ documentation:
 
 # A description of what the inputs do (e.g. red button, SPI CLK, SPI MOSI, etc).
   inputs:               
-    - row_sel[0]
+    - row_sel[0] / pattern_sel
     - row_sel[1]
     - rol_sel[2]
     - rol_sel[3]

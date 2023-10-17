@@ -45,6 +45,7 @@ module tt_um_urish_silife_max (
     .clk(clk),
     .rst_n(rst_n),
     .en(demo_mode),
+    .pattern_select(ui_in[0]),
     .row_select(demo_row_select),
     .cells(demo_cells),
     .wr_en(demo_wr_en),

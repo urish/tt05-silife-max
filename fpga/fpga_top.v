@@ -200,6 +200,7 @@ always @(posedge clk) begin
                     tx_byte <= "D";
                     tx_valid <= 'b1;
                     demo_en <= 'b1;
+                    silife_row_select <= rx_byte == "D" ? 'd1 : 'd0;
                 end
 
                 "p",

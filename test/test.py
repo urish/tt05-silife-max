@@ -6,12 +6,15 @@ from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles, RisingEdge
 from game_of_life import GameOfLife
 
-with open("../src/demo_pattern.lif", "r") as f:
-    DEMO_PATTERN = [
-        line.strip().replace(".", " ")
-        for line in f.readlines()
-        if not line.startswith("#")
-    ]
+
+def read_demo_pattern(filename):
+    with open(filename, "r") as f:
+        return [
+            line.strip().replace(".", " ")
+            for line in f.readlines()
+            if not line.startswith("#")
+        ]
+
 
 GRID_HEIGHT = 32
 GRID_WIDTH = 8
@@ -140,16 +143,30 @@ async def test_demo_mode(dut):
 
     silife = SiLifeDriver(dut, dut.clk)
 
-    # Reset
-    dut._log.info("Enable & reset into demo mode")
+    dut._log.info("Enable & reset into demo mode, first pattern")
     dut.ena.value = 1
-    dut.ui_in.value = 0
+    dut.row_select.value = 0  # This selects the first demo pattern
     dut.uio_in.value = 0
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 2)
     dut.wr_en.value = 1
     dut.rst_n.value = 1
     await ClockCycles(dut.clk, 100)  # wait for demo mode to load initial grid
-    
+
     dut._log.info("Verify demo mode initial state")
-    assert await silife.read_grid() == DEMO_PATTERN
+    expected_pattern = read_demo_pattern("../src/demo_1.lif")
+    assert await silife.read_grid() == expected_pattern
+
+    dut._log.info("Enable & reset into demo mode, second pattern")
+    dut.ena.value = 1
+    dut.row_select.value = 1  # This selects the second demo pattern
+    dut.uio_in.value = 0
+    dut.rst_n.value = 0
+    await ClockCycles(dut.clk, 2)
+    dut.wr_en.value = 1
+    dut.rst_n.value = 1
+    await ClockCycles(dut.clk, 100)  # wait for demo mode to load initial grid
+
+    dut._log.info("Verify demo mode initial state")
+    expected_pattern = read_demo_pattern("../src/demo_2.lif")
+    assert await silife.read_grid() == expected_pattern
