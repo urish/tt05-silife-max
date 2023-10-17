@@ -43,7 +43,7 @@ documentation:
       Demo mode: 
       The demo mode loads a pre-defined game into the grid and advances it automatically.
       To enter the demo mode, `wr_en` high while reseting the design (`rst_n` low).
-      Set `en` to 1 to automatically advance one generation every 1 second (assuming a 10MHz clock).
+      Set `en` to 1 to automatically advance one generation every 0.4 seconds (assuming a 10MHz clock).
       To pause the game, set `en` to 0.
 
       Manual mode: 

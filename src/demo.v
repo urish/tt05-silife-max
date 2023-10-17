@@ -40,7 +40,7 @@ always @(posedge clk) begin
             wr_en <= 1'b0;
           end
         end
-        if (counter == 'd9_999_999) begin
+        if (counter == 'd3_999_999) begin
           step <= 1'b1;
           counter <= 'd0;
         end else begin
