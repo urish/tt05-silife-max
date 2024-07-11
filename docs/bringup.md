@@ -40,3 +40,17 @@ Toggle button **6** to pause/reset the animation.
 ![Selecting the project](./commander-project-select.png)
 ![Starting the demo mode](commander-input-config.png)
 
+## Interactive mode
+
+To run in interactive mode, go to the REPL tab of the commander app, press Ctrl+E, and paste the [bringup script](../bringup/silife.py). Press Ctrl+D to run the script.
+
+You can now interact with the Game of Life by sending commands to the project. The following commands are supported:
+
+- `R` - Generate a random pattern
+- `N` - Advance to the next generation
+- `D` - Dump the current grid to the console (will interfere with the MAX7219 display)
+- `Q` - Quit the interactive mode and return to the REPL
+
+Usually, you would start by generating a random pattern with `R`, and then advance to the next generation with `N`. You can repeat the `N` command to see the pattern evolve.
+
+If you use the "D" command, you will see the current grid printed to the console. This will send some garbage to the MAX7219 display. To restore the display, you quit the interactive mode with the `Q` command and restart the project by typing `run()` in the REPL.
